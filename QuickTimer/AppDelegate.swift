@@ -21,7 +21,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         statusItem.button?.image = UserDefaults.standard.string(forKey: "AppleInterfaceStyle") == "Dark" ?
-            NSImage(named: "AppIconDark") : NSImage(named:"AppIcon")
+            NSImage(named: NSImage.Name(rawValue: "AppIconDark")) : NSImage(named:NSImage.Name(rawValue: "AppIcon"))
         statusItem.button?.imageScaling = .scaleProportionallyDown
 
         // Menu
@@ -132,7 +132,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
             userInfo: nil,
             repeats: true
         )
-        if let timer = timer { RunLoop.main.add(timer, forMode: .common) }
+            if let timer = timer { RunLoop.main.add(timer, forMode: .commonModes) }
     }
 
     private func stopTimer() {
