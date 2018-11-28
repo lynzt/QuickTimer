@@ -11,8 +11,9 @@ import AVFoundation
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDelegate {
-
-    let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
+    
+    
+    let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     let startStopMenuItem = NSMenuItem(title: "Start", action: #selector(startStopTimer), keyEquivalent: "S")
     var timeMenuItems: [NSMenuItem]!
     var isTimerRunning = false
@@ -21,10 +22,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     var timer: Timer?
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        statusItem.button?.image = UserDefaults.standard.string(forKey: "AppleInterfaceStyle") == "Dark" ?
-            NSImage(named: NSImage.Name(rawValue: "AppIconDark")) : NSImage(named:NSImage.Name(rawValue: "AppIcon"))
-        statusItem.button?.imageScaling = .scaleProportionallyDown
-
         // Menu
         let menu = NSMenu()
         menu.autoenablesItems = false
@@ -58,6 +55,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         menu.addItem(NSMenuItem(title: "Quit", action: #selector(terminate), keyEquivalent: "q"))
 
         statusItem.menu = menu
+        statusItem.title = "Thymer"
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {}
@@ -125,8 +123,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         else {
             let minutesLeftString = String(format: "%02d", timeRemainingInSeconds / 60)
             let secondsLeftString = String(format: "%02d", timeRemainingInSeconds % 60)
-            startStopMenuItem.title = "Stop (\(minutesLeftString):\(secondsLeftString))"
+            statusItem.title = formatTimeRemaining()
+            startStopMenuItem.title = "Stop (\(formatTimeRemaining()))"
         }
+    }
+    
+    
+    @objc func formatTimeRemaining() -> String {
+        let minutesLeftString = String(format: "%02d", timeRemainingInSeconds / 60)
+        let secondsLeftString = String(format: "%02d", timeRemainingInSeconds % 60)
+        return "\(minutesLeftString):\(secondsLeftString)"
+
     }
 
     @objc func terminate() { NSApp.terminate(self) }
