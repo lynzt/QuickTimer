@@ -11,6 +11,7 @@
 		2021AAEF1EDE1B2B00353860 /* EventMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2021AAEE1EDE1B2B00353860 /* EventMonitor.swift */; };
 		20DE14401ED6801200CF175F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DE143F1ED6801200CF175F /* AppDelegate.swift */; };
 		20DE14471ED6801200CF175F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20DE14451ED6801200CF175F /* Main.storyboard */; };
+		81D9B7A721AECEF400ADC291 /* juand20__aparicion.wav in Resources */ = {isa = PBXBuildFile; fileRef = 81D9B7A621AECEF400ADC291 /* juand20__aparicion.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +21,7 @@
 		20DE143F1ED6801200CF175F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		20DE14461ED6801200CF175F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		20DE14481ED6801200CF175F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		81D9B7A621AECEF400ADC291 /* juand20__aparicion.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = juand20__aparicion.wav; path = ../../../Downloads/juand20__aparicion.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +54,7 @@
 		20DE143E1ED6801200CF175F /* QuickTimer */ = {
 			isa = PBXGroup;
 			children = (
+				81D9B7A621AECEF400ADC291 /* juand20__aparicion.wav */,
 				20016D0E1EEB624F00210CC7 /* Assets.xcassets */,
 				20DE143F1ED6801200CF175F /* AppDelegate.swift */,
 				20DE14451ED6801200CF175F /* Main.storyboard */,
@@ -122,6 +125,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				20016D0F1EEB624F00210CC7 /* Assets.xcassets in Resources */,
+				81D9B7A721AECEF400ADC291 /* juand20__aparicion.wav in Resources */,
 				20DE14471ED6801200CF175F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

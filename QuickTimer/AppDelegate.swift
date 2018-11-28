@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import AVFoundation
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDelegate {
@@ -15,8 +16,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     let startStopMenuItem = NSMenuItem(title: "Start", action: #selector(startStopTimer), keyEquivalent: "S")
     var timeMenuItems: [NSMenuItem]!
     var isTimerRunning = false
-    var selectedTimeInSeconds = 60
-    var timeRemainingInSeconds = 60
+    var selectedTimeInSeconds = 6
+    var timeRemainingInSeconds = 6
     var timer: Timer?
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
@@ -29,9 +30,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         menu.autoenablesItems = false
         menu.addItem(startStopMenuItem)
         menu.addItem(.separator())
-
+        
+        let sixSecondMenuItem = NSMenuItem(title: "6 sec", action: #selector(timer1), keyEquivalent: "6")
+        sixSecondMenuItem.state = .on
+        sixSecondMenuItem.isEnabled = true
+        
         let oneMinuteMenuItem = NSMenuItem(title: "1 min", action: #selector(timer1), keyEquivalent: "1")
-        oneMinuteMenuItem.state = .on
         oneMinuteMenuItem.isEnabled = true
         let fiveMinuteMenuItem = NSMenuItem(title: "5 min", action: #selector(timer5), keyEquivalent: "2")
         fiveMinuteMenuItem.isEnabled = true
@@ -42,8 +46,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         let sixtyMinuteMenuItem = NSMenuItem(title: "60 min", action: #selector(timer60), keyEquivalent: "5")
         sixtyMinuteMenuItem.isEnabled = true
 
-        timeMenuItems = [oneMinuteMenuItem, fiveMinuteMenuItem, fifteenMinuteMenuItem, thirtyMinuteMenuItem, sixtyMinuteMenuItem]
+        timeMenuItems = [sixSecondMenuItem, oneMinuteMenuItem, fiveMinuteMenuItem, fifteenMinuteMenuItem, thirtyMinuteMenuItem, sixtyMinuteMenuItem]
 
+        menu.addItem(sixSecondMenuItem)
         menu.addItem(oneMinuteMenuItem)
         menu.addItem(fiveMinuteMenuItem)
         menu.addItem(fifteenMinuteMenuItem)
@@ -58,7 +63,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     func applicationWillTerminate(_ aNotification: Notification) {}
 
     // MARK: Selectors
-
+    @objc func timer6() { timer(6) }
+    
     @objc func timer1() { timer(1) }
 
     @objc func timer5() { timer(5) }
@@ -71,10 +77,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 
     func timer(_ time: Int){
         let selectedIndex: Int
+        print (time)
         switch time {
+        case 6:
+            selectedIndex = 5
+            selectedTimeInSeconds = 6
+            
         case 1:
             selectedIndex = 0
-            selectedTimeInSeconds = 60
+            selectedTimeInSeconds = 5
         case 5:
             selectedIndex = 1
             selectedTimeInSeconds = 300
@@ -88,7 +99,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
             selectedIndex = 4
             selectedTimeInSeconds = 3600
         default:
-            selectedIndex = 0
+            selectedIndex = 5
             break
         }
         timeRemainingInSeconds = selectedTimeInSeconds
@@ -141,12 +152,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         timer?.invalidate()
         timer = nil
     }
-
-    private func displayNotification() {
+    
+    @objc func displayNotification() {
         let notification = NSUserNotification()
-        notification.title = "It's time!"
-        notification.soundName = NSUserNotificationDefaultSoundName
+        notification.title = "It's time! 🕘"
+        
         NSUserNotificationCenter.default.deliver(notification)
+        
+        NSApplication.shared.requestUserAttention(.criticalRequest)
+        
+        let soundURL = Bundle.main.url(forResource: "juand20__aparicion", withExtension: "wav")
+        var soundID: SystemSoundID = 0
+        AudioServicesCreateSystemSoundID(soundURL! as CFURL, &soundID)
+        AudioServicesPlaySystemSound(soundID)
+        startTimer()
     }
 
 
